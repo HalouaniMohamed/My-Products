@@ -95,6 +95,7 @@ function handleSaveButton(k) {
     url: document.querySelector("#url").value,
   });
   displayProducts();
+  handleResetButton();
 }
 
 function handleDeleteButton(id) {
