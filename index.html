@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <nav>
+            <a href="#">Admin</a>
+            <a href=client.html>Client</a>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="left">
+            <!-- <div class="products">
+                <img id="ProductImg" src=" http://lnnk.in/ehbW">
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <a><img  id="edit" src=" http://lnnk.in/aBfb"></a>
+                <a><img  id="delete" src=" http://lnnk.in/gXcb"></a>
+                <br>
+                <p>Asus GG</p>
+                <p>3000 DT (15 pieces)</p>
+            </div>
+            <div class="products">
+                <img id="ProductImg" src=" http://lnnk.in/ehbW">
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                
+                <a><img  id="edit" src=" http://lnnk.in/aBfb"></a>
+                <a><img  id="delete" src=" http://lnnk.in/gXcb"></a>
+                <br>
+                <p id=#>Asus GG</p>
+                <p>3000 DT (15 pieces)</p>
+            </div>
+            
+            <div class="products">
+                <img id="ProductImg" src=" http://lnnk.in/ehbW">
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                
+                <a><img  id="edit" src=" http://lnnk.in/aBfb"></a>
+                <a><img  id="delete" src=" http://lnnk.in/gXcb"></a>
+                <br>
+                <p>Asus GG</p>
+                <p>3000 DT (15 pieces)</p>
+            </div> -->
+        </div>
+        <div class="right">
+            <form class="form" action="">
+                <h4>Admin Panel</h4>
+                <input type="text" id="name" placeholder="Name" required/>
+                <input type="number" id="price" placeholder="Price" min="0" required/>
+                <input type="number" id="qt" placeholder="Quantity" min="0" required/>
+                <input type="url" id="url" placeholder="Picture link" required/> 
+                <button  id="saveButton">Save</button>
+                <button type="submit"  id="createButton">Create</button>
+           </form>
+           <button type="reset" onclick="handleResetButton()" id="resetButton">Reset</button>
+        </div>
+    </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-database.js"></script>
+<script src="data.js"></script>
+<script src="ui.js"></script>
+<script src="main.js"></script>
+
+</html>
