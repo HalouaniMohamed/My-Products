@@ -11,4 +11,9 @@ document.querySelector("#saveButton").addEventListener("click",(e) => {
     handleSaveButton(idd);
 });
 
+document.querySelector('#inputFile').addEventListener("change", (e)=>{
+    handleUploadButton();
+}
+    
+);
 

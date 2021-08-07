@@ -137,16 +137,19 @@ function handleDeleteButton(id) {
 }
 
 function handleDownloadButton() {
+  products=[];
   ref.on("value", (snapshot) => {
     snapshot = snapshot.val();
     let keys = Object.keys(snapshot);
     for (let i = 0; i < keys.length; i++) {
       let tempProduct = {
-        id: snapshot[keys[i]].id,
+        
         name: snapshot[keys[i]].name,
         price: snapshot[keys[i]].price,
         qt: snapshot[keys[i]].qt,
+        url: snapshot[keys[i]].url,
       };
+      
       products.push(tempProduct);
     }
   });
@@ -165,3 +168,20 @@ function download(jsonPath, text) {
   element.click();
   document.body.removeChild(element);
 }
+
+
+function handleUploadButton(){
+  let fileToRead = document.querySelector('#inputFile').files[0];
+  let fileRead = new FileReader();
+  fileRead.onload = function(e) {
+    let content = e.target.result;
+    let parsedContent = JSON.parse(content);
+    for ( let i =0 ; i < parsedContent.length ; i++){
+      addProduct(parsedContent[i]);
+      
+    }
+
+  }
+  fileRead.readAsText(fileToRead);
+  } 
+
