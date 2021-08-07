@@ -171,15 +171,21 @@ function download(jsonPath, text) {
 
 
 function handleUploadButton(){
+  
   let fileToRead = document.querySelector('#inputFile').files[0];
   let fileRead = new FileReader();
   fileRead.onload = function(e) {
+    
     let content = e.target.result;
     let parsedContent = JSON.parse(content);
-    for ( let i =0 ; i < parsedContent.length ; i++){
-      addProduct(parsedContent[i]);
-      
+    let conf = confirm("fk u kid","confirm");
+    if (conf){
+      for ( let i =0 ; i < parsedContent.length ; i++){
+        addProduct(parsedContent[i]);
+        
+      }
     }
+    
 
   }
   fileRead.readAsText(fileToRead);
