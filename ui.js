@@ -11,6 +11,7 @@ function productBox({ id, name, price, qt, url }) {
      </div>
     `;
 }
+
 function displayProducts() {
   ref.on("value", gotData, errorData);
 }
@@ -23,7 +24,11 @@ function gotData(data) {
     data = data.val();
     let keys = Object.keys(data);
     let productsElement = document.querySelector(".left");
-    productsElement.innerHTML = "";
+    productsElement.innerHTML = `<div class="download">
+    <button onclick="handleDownloadButton()">
+        Download Products
+      </button>
+  </div>`;
 
     for (let i = 0; i < keys.length; i++) {
       productsElement.innerHTML += productBox(data[keys[i]]);
@@ -31,6 +36,8 @@ function gotData(data) {
     globalThis.lastID = data[keys[keys.length - 1]].id + 1;
   } else {
     globalThis.lastID = 0;
+    let productsElement = document.querySelector(".left");
+    productsElement.innerHTML = "";
   }
 }
 
@@ -45,6 +52,7 @@ function getFormData() {
   return formData;
 }
 
+// add product to firebase
 function addProduct({ name, price, qt, url }) {
   let newProduct = {
     id: lastID,
@@ -56,18 +64,20 @@ function addProduct({ name, price, qt, url }) {
   ref.push(newProduct);
 }
 
+// create button
 function handleCreateButton() {
   addProduct(getFormData());
   handleResetButton();
   displayProducts();
 }
 
+// reset button
 function handleResetButton() {
-  // document.querySelector(".form").reset() ;
   let nigga = document.querySelectorAll("input");
   nigga.forEach((zeb) => (zeb.value = ""));
 }
 
+// edit button
 function handleEditButton(id) {
   ref.on("value", (snapshot) => {
     snapshot = snapshot.val();
@@ -86,6 +96,7 @@ function handleEditButton(id) {
   });
 }
 
+//save button
 function handleSaveButton(k) {
   database.ref("Products/" + k).update({
     // id: lastID,
@@ -98,43 +109,59 @@ function handleSaveButton(k) {
   handleResetButton();
 }
 
+//delete button
 function handleDeleteButton(id) {
-  // snapshot = snapshot.val();
-  //     let keys = Object.keys(snapshot);
-  //     for(let i=0 ; i<keys.length ; i++ ){
-  //         if (snapshot[keys[i]].id==id){
-  //             k=keys[i];
-  //             break;
-  //         }
-  //     }
-  //     let toDelete = database.ref("Products/"+k);
-  //     toDelete.remove();
-  //     displayProducts();
-   let conf = confirm("fk u kid","confirm")
-   if(conf){
-
-   
-   ref.on("value", (snapshot)=>{
-    displayProducts();
-    if (snapshot.exists()){
-        snapshot =snapshot.val();
-        let keys = Object.keys(snapshot);
-        for( let i=0 ; i< keys.length ; i++){
-            if (snapshot[keys[i]].id == id ){
-                globalThis.f = keys[i];
-            }
-        }
-        ref.child(f).remove();
-    }
-    else {
+  let conf = confirm("fk u kid", "confirm");
+  if (conf) {
+    ref.once(
+      "value",
+      (snapshot) => {
         displayProducts();
-    }
-   }
-    
-   );
-}
+        if (snapshot.exists()) {
+          snapshot = snapshot.val();
+          let keys = Object.keys(snapshot);
+          for (let i = 0; i < keys.length; i++) {
+            if (snapshot[keys[i]].id == id) {
+              globalThis.f = keys[i];
+            }
+          }
+          ref.child(f).remove();
+        }
+      },
+      (errorObject) => {
+        console.log("The read failed: " + errorObject.name);
+      }
+    );
+  }
   displayProducts();
-  
 }
 
+function handleDownloadButton() {
+  ref.on("value", (snapshot) => {
+    snapshot = snapshot.val();
+    let keys = Object.keys(snapshot);
+    for (let i = 0; i < keys.length; i++) {
+      let tempProduct = {
+        id: snapshot[keys[i]].id,
+        name: snapshot[keys[i]].name,
+        price: snapshot[keys[i]].price,
+        qt: snapshot[keys[i]].qt,
+      };
+      products.push(tempProduct);
+    }
+  });
+  download("products.json", JSON.stringify(products));
+}
 
+function download(jsonPath, text) {
+  let element = document.createElement("a");
+  element.style.display = "none";
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", jsonPath);
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}

@@ -1,3 +1,5 @@
+
+
 var firebaseConfig = {
   apiKey: "AIzaSyCQYWUthI8LVhJCQZJVTSLxf_4lknV5AIw",
   authDomain: "products-38161.firebaseapp.com",
@@ -17,5 +19,12 @@ firebase.initializeApp(firebaseConfig);
 let database= firebase.database();
 
 let ref = database.ref("Products");
+
+let products=[];
+
+
+
+
  
+
 
