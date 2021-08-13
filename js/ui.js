@@ -137,19 +137,18 @@ function handleDeleteButton(id) {
 }
 
 function handleDownloadButton() {
-  products=[];
+  products = [];
   ref.on("value", (snapshot) => {
     snapshot = snapshot.val();
     let keys = Object.keys(snapshot);
     for (let i = 0; i < keys.length; i++) {
       let tempProduct = {
-        
         name: snapshot[keys[i]].name,
         price: snapshot[keys[i]].price,
         qt: snapshot[keys[i]].qt,
         url: snapshot[keys[i]].url,
       };
-      
+
       products.push(tempProduct);
     }
   });
@@ -169,25 +168,18 @@ function download(jsonPath, text) {
   document.body.removeChild(element);
 }
 
-
-function handleUploadButton(){
-  
-  let fileToRead = document.querySelector('#inputFile').files[0];
+function handleUploadButton() {
+  let fileToRead = document.querySelector("#inputFile").files[0];
   let fileRead = new FileReader();
-  fileRead.onload = function(e) {
-    
+  fileRead.onload = function (e) {
     let content = e.target.result;
     let parsedContent = JSON.parse(content);
-    let conf = confirm("fk u kid","confirm");
-    if (conf){
-      for ( let i =0 ; i < parsedContent.length ; i++){
+    let conf = confirm("fk u kid", "confirm");
+    if (conf) {
+      for (let i = 0; i < parsedContent.length; i++) {
         addProduct(parsedContent[i]);
-        
       }
     }
-    
-
-  }
+  };
   fileRead.readAsText(fileToRead);
-  } 
-
+}
